@@ -1,0 +1,133 @@
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'AndResGuard'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        applicationId rootProject.ext.applicationId
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+        resConfigs rootProject.ext.resConfigs
+        vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        release {
+            storeFile file('x:/xxxxxx/xxxxxx.jks')
+            storePassword 'xxxxxx'
+            keyAlias 'xxxxxx'
+            keyPassword 'xxxxxx'
+            v2SigningEnabled false
+        }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled true
+            shrinkResources false // 去除无用资源
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        release {
+            minifyEnabled true
+            shrinkResources false // 去除无用资源
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ["libs"]
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+andResGuard {
+    //mappingFile用于增量更新，保持本次混淆与上次混淆结果一致；
+    // mappingFile = file("./resource_mapping.txt")
+    mappingFile = null
+    //uss7zip为true时，useSign必须为true；
+    use7zip = true
+    //useSign为true时，需要配置signConfig；
+    useSign = true
+    //打开这个开关，会keep住所有资源的原始路径，只混淆资源的名字;
+    keepRoot = false
+    //whiteList添加在代码内部需要动态获取的资源id，不混淆这部分；
+    whiteList = [
+            // for your icon
+            "R.mipmap.ic_icon",
+
+            // "R.string.umeng*",
+    ]
+    //用来指定文件重打包时是否压缩指定文件;
+    compressFilePattern = [
+            "*.png",
+            "*.jpg",
+            "*.jpeg",
+            "*.gif",
+            "resources.arsc"
+    ]
+    //sevenzip可使用artifacr或path，path指本地安装的7za（7zip命令行工具）。
+    sevenzip {
+        artifact = 'com.tencent.mm:SevenZip:1.2.0'
+        //path = "/usr/local/bin/7za"
+    }
+    // gradlew resguardRelease
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+
+    compile rootProject.ext.libSupportAppcompat
+    compile rootProject.ext.libSupportDesign
+    compile rootProject.ext.libSupportRecyclerView
+    compile rootProject.ext.libSupportCardView
+    // compile rootProject.ext.libSupportGridLayout
+    compile rootProject.ext.libSupportVectorDrawable
+    // compile rootProject.ext.libSupportPalette
+    // compile rootProject.ext.libSupportPercent
+
+    compile rootProject.ext.libFragmentation
+
+    compile rootProject.ext.libRxJava
+    compile rootProject.ext.libRxAndroid
+    compile rootProject.ext.libRxPermissions
+
+    compile rootProject.ext.libRetrofit
+    compile rootProject.ext.libRetrofitConverterGson
+    compile rootProject.ext.libRetrofitAdapterRxJava
+
+    compile rootProject.ext.libGson
+
+    compile rootProject.ext.libOkHttp
+    compile rootProject.ext.libOkHttpLoggingInterceptor
+
+    compile rootProject.ext.libDagger
+    annotationProcessor rootProject.ext.libDaggerCompiler
+
+    compile rootProject.ext.libShapedImageView
+
+    compile rootProject.ext.libGlide
+    compile rootProject.ext.libGlideOkhttp3Integration
+}

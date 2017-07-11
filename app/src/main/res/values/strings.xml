@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">MVVM</string>
+
+    <string name="empty"> </string>
+    <string name="blank">&#160;</string>
+    <string name="line_vertical">|</string>
+
+    <!-- 下拉刷新 -->
+    <string name="label_loading_idle">发呆中&#46;&#46;&#46;</string>
+    <string name="label_loading_loading">加载中&#46;&#46;&#46;</string>
+    <string name="label_loading_no_more">再也没有了</string>
+    <string name="label_loading_error">玩坏了&#46;&#46;&#46;</string>
+</resources>
