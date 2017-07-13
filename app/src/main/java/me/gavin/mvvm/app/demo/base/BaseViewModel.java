@@ -47,5 +47,6 @@ public abstract class BaseViewModel extends BaseObservable {
 
     protected abstract void init();
 
-    protected void getData() { }
+    protected void getData() {
+    }
 }

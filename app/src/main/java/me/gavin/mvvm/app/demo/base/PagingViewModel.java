@@ -19,13 +19,14 @@ import me.gavin.mvvm.databinding.FooterLoadingBinding;
  *
  * @author gavin.xiong 2017/7/11
  */
-public abstract class PagingViewModel<T, A extends RecyclerHeaderFooterAdapter> extends BaseViewModel implements SwipeRefreshLayout.OnRefreshListener {
+public abstract class PagingViewModel<T, A extends RecyclerHeaderFooterAdapter>
+        extends BaseFragmentViewModel implements SwipeRefreshLayout.OnRefreshListener {
 
-    protected boolean refreshing;
-    protected String text;
+    private boolean refreshing;
+    private String text;
 
     protected boolean haveMore = false;
-    protected boolean loading = false;
+    private boolean loading = false;
     protected int limit = 15;
     protected int offset = 1;
     protected int preCount = 0;

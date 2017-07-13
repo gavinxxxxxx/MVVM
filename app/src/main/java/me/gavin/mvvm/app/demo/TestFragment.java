@@ -2,8 +2,10 @@ package me.gavin.mvvm.app.demo;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 
 import me.gavin.mvvm.R;
+import me.gavin.mvvm.app.demo.base.BaseViewModel;
 import me.gavin.mvvm.base.BindingFragment;
 import me.gavin.mvvm.databinding.FragTestBinding;
 
@@ -13,8 +15,6 @@ import me.gavin.mvvm.databinding.FragTestBinding;
  * @author gavin.xiong 2017/7/10
  */
 public class TestFragment extends BindingFragment<FragTestBinding> {
-
-    TestViewModel viewModel;
 
     public static TestFragment newInstance() {
         return new TestFragment();
@@ -26,14 +26,13 @@ public class TestFragment extends BindingFragment<FragTestBinding> {
     }
 
     @Override
-    protected void afterCreate(@Nullable Bundle savedInstanceState) {
-        viewModel = new TestViewModel(_mActivity, binding);
-        binding.setViewModel(viewModel);
+    protected BaseViewModel getViewModel() {
+        return new TestViewModel(_mActivity, binding);
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        viewModel.onDestroy();
+    protected void afterCreate(@Nullable Bundle savedInstanceState) {
+        binding.toolbar.setNavigationOnClickListener(v ->
+                Snackbar.make(binding.recycler, "显示点什么好呢~", Snackbar.LENGTH_LONG).show());
     }
 }
