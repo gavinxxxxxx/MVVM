@@ -28,7 +28,7 @@ public class TestViewModel extends PagingViewModel {
 
     @Override
     public void init() {
-        list = new ArrayList<Daily.Story>();
+        list = new ArrayList<>();
         adapter = new BindingFooterAdapter<>(mContext.get(), list, R.layout.item_daily);
         loadingBinding = FooterLoadingBinding.inflate(LayoutInflater.from(mContext.get()));
         adapter.setFooterBinding(loadingBinding);
